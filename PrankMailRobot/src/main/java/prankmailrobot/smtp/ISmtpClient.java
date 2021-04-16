@@ -11,6 +11,8 @@ package prankmailrobot.smtp;
 
 import prankmailrobot.model.mail.Message;
 
+import java.io.IOException;
+
 /**
  * Interface a implémenter pour être un smtp client du prankMailRobot.
  * @author Forestier Quentin et Herzig Melvyn
@@ -20,7 +22,7 @@ public interface ISmtpClient
 {
    /**
     * Envoie les messages en paramètre grâce au protocole SMTP.
-    * @param messages
+    * @param messages Messages à envoyer.
     */
-   public void sendMessages(Message ... messages);
+   public void sendMessages(Message ... messages) throws IOException;
 }
