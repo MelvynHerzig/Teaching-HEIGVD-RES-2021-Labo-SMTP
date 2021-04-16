@@ -12,7 +12,7 @@ package prankmailrobot.model.mail;
 /**
  * Classe définissant une personne qui envoie/recoit des emails.
  * @author Forestier Quentin et Herzig Melvyn
- * @version 16/04/2021
+ * @date 16/04/2021
  */
 public class Person
 {

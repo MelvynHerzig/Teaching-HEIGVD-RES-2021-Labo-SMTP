@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Classe définissant un group de personnes pour les emails
  * @author Forestier Quentin et Herzig Melvyn
- * @version 16/04/2021
+ * @date 16/04/2021
  */
 public class Group
 {

@@ -14,24 +14,24 @@ import java.util.ArrayList;
 /**
  * Classe définissant le contenu d'un email SMTP.
  * @author Forestier Quentin et Herzig Melvyn
- * @version 16/04/2021
+ * @date 16/04/2021
  */
 public class Message
 {
    /**
     * Expéditeur
     */
-   private Person from;
+   private String from;
 
    /**
     * Liste des récepteurs.
     */
-   private ArrayList<Person> to;
+   private ArrayList<String> to;
 
    /**
     * Liste des personnes jointes.
     */
-   private ArrayList<Person> cc;
+   private ArrayList<String> cc;
 
    /**
     * Sujet du mail
@@ -51,7 +51,7 @@ public class Message
     * @param subject Sujet
     * @param content Contenu du mail.
     */
-   public Message(Person from, ArrayList<Person> to, ArrayList<Person> cc, String subject, String content)
+   public Message(String from, ArrayList<String> to, ArrayList<String> cc, String subject, String content)
    {
       this.from = from;
       this.to = to;
@@ -64,7 +64,7 @@ public class Message
     * Getter expéditeur
     * @return Retourne l'expéditeur.
     */
-   public Person getFrom()
+   public String getFrom()
    {
       return from;
    }
@@ -73,7 +73,7 @@ public class Message
     * Getter des récepteurs
     * @return Retourne les récepteurs.
     */
-   public ArrayList<Person> getTo()
+   public ArrayList<String> getTo()
    {
       return to;
    }
@@ -82,7 +82,7 @@ public class Message
     * Getter des personnes en copies.
     * @return Retourne les personnes en copies.
     */
-   public ArrayList<Person> getCc()
+   public ArrayList<String> getCc()
    {
       return cc;
    }
