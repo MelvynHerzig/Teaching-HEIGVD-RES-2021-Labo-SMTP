@@ -12,6 +12,7 @@
 
 # Package Files #
 *.jar
+!MockMock/MockMock-1.4.0.one-jar.jar
 *.war
 *.nar
 *.ear
