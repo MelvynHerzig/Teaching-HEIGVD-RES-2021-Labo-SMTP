@@ -1,13 +1,6 @@
-/*
- -----------------------------------------------------------------------------------
- Cours       : RES
- Fichier     : prankmailrobot.model.mail.Group.java
- Auteur(s)   : Forestier Quentin & Herzig Melvyn
- Date        : 16.04.2021
- -----------------------------------------------------------------------------------
- */
-
 package prankmailrobot.model.mail;
+
+import prankmailrobot.model.prank.Prank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +28,7 @@ public class Group
     * Une personne nulle ou en double est ignorée.
     * @param persons Liste des personnes du groupe de l'email.
     */
-   public Group(Person...persons)
+   public Group(List<Person> persons)
    {
       boolean first = true;
 
@@ -72,8 +65,39 @@ public class Group
     * Getter des récepteurs de l'email.
     * @return Retourne les récepteur de l'email.
     */
-   public List<Person> getReceivers()
+   public ArrayList<Person> getReceivers()
    {
       return receivers;
+   }
+
+   public static ArrayList<Group> makeGroups(List<Person> persons, int nbGroup)
+   {
+      // Vérification de la taille minimale des groupes.
+      if(persons.size() / 3 < nbGroup)
+      {
+         throw new RuntimeException("Pas assez de victimes pour le nombre de groupes (min 3p / groupe)");
+      }
+
+      // Nombre de membres d'un groupe.
+      double sizeGroup = (double)persons.size() / (double)nbGroup;
+
+      // Groupes résultants
+      ArrayList<Group> groups = new ArrayList<>();
+
+      // Par groupe
+      for(int i = 0; i < nbGroup ; ++i)
+      {
+         // Si c'est le dernier groupe, arrondi le nombre de personnes à insérer au supérieur.
+         int nbPersonToInsert = (int) ((i != nbGroup - 1) ? Math.floor(sizeGroup) : Math.ceil(sizeGroup));
+         ArrayList<Person> victims = new ArrayList<>(persons.subList(0, nbPersonToInsert));
+
+         // Retrait des personnes qui viennent d'être groupées.
+         persons.subList(0, nbPersonToInsert).clear();
+
+         // Création du groupe
+         groups.add(new Group(victims));
+      }
+
+      return groups;
    }
 }

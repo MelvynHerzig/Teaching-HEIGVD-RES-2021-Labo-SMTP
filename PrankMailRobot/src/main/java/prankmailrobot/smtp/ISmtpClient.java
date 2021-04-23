@@ -1,17 +1,9 @@
-/*
- -----------------------------------------------------------------------------------
- Cours       : RES
- Fichier     : prankmailrobot.smtp.ISmtpClient.java
- Auteur(s)   : Forestier Quentin & Herzig Melvyn
- Date        : 16.04.2021
- -----------------------------------------------------------------------------------
- */
-
 package prankmailrobot.smtp;
 
 import prankmailrobot.model.mail.Message;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Interface a implémenter pour être un smtp client du prankMailRobot.
@@ -24,5 +16,5 @@ public interface ISmtpClient
     * Envoie les messages en paramètre grâce au protocole SMTP.
     * @param messages Messages à envoyer.
     */
-   public void sendMessages(Message ... messages) throws IOException;
+   public void sendMessages(List<Message> messages);
 }

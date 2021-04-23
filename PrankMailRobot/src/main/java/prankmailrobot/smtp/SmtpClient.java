@@ -1,14 +1,6 @@
-/*
- -----------------------------------------------------------------------------------
- Cours       : RES
- Fichier     : prankmailrobot.smtp.SmtpClient.java
- Auteur(s)   : Forestier Quentin & Herzig Melvyn
- Date        : 16.04.2021
- -----------------------------------------------------------------------------------
- */
-
 package prankmailrobot.smtp;
 
+import prankmailrobot.PrankMailRobot;
 import prankmailrobot.model.mail.Message;
 
 import java.io.PrintWriter;
@@ -17,6 +9,8 @@ import java.net.Socket;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Base64;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,12 +29,12 @@ public class SmtpClient implements ISmtpClient
    /**
     * Adresse du serveur smtp.
     */
-   private String address;
+   private final String address;
 
    /**
     * Port du serveur smtp.
     */
-   private int port;
+   private final int port;
 
    /**
     * Socket en connexion avec le serveur smtp.
@@ -57,7 +51,13 @@ public class SmtpClient implements ISmtpClient
     */
    private BufferedReader in = null;
 
-   public SmtpClient(String address, int port){
+   /**
+    * Constructeur
+    * @param address Adresse du serveur.
+    * @param port Numéro de port du serveur.
+    */
+   public SmtpClient(String address, int port)
+   {
       this.address = address;
       this.port = port;
 
@@ -65,8 +65,13 @@ public class SmtpClient implements ISmtpClient
    }
 
    @Override
-   public void sendMessages(Message... messages) throws IOException
+   public void sendMessages(List<Message> messages)
    {
+      // Initialisation de la connexion.
+      connect();
+      skipMessageServer("220");
+
+      // Pour chaque message
       for(Message message : messages)
       {
          if(message == null)
@@ -74,110 +79,104 @@ public class SmtpClient implements ISmtpClient
             continue;
          }
 
-         // Connexion au serveur.
-         connect();
-
-         skipMessageServer("220");
-
          // EHLO
-         sendToServer("EHLO localhost");
+         out.println("EHLO localhost");
          skipMessageServer("250");
 
          // FROM
-         sendToServer("MAIL FROM: " + message.getFrom());
+         out.println("MAIL FROM: <" + message.getFrom() + ">");
+         skipMessageServer("250");
 
          // RCPT TO
          for (String addresse : message.getTo()) // To
          {
-            sendToServer("RCPT TO: " +  addresse);
+            out.println("RCPT TO: <" +  addresse + ">");
             skipMessageServer("250");
          }
 
          for (String addresse : message.getCc()) // Cc
          {
-            sendToServer("RCPT TO: " +  addresse);
+            out.println("RCPT TO: <" +  addresse + ">");
             skipMessageServer("250");
          }
 
          // DATA
-         sendToServer("DATA");
+         out.println("DATA");
          skipMessageServer("354");
 
+         StringBuilder content = new StringBuilder();
+
          // from
-         sendToServer("From: " + message.getFrom());
+         content.append("Content-Type: text/plain; charset=utf-8\r\n");
+         content.append("From: ").append(message.getFrom()).append("\r\n");
 
          // to
-         String tos = "To: " + message.getTo().get(0);
+         content.append("To: ").append(message.getTo().get(0));
          for(int i = 1; i < message.getTo().size(); ++i)
          {
-            tos += ", " + message.getTo().get(i);
+            content.append(", ").append(message.getTo().get(i));
          }
-         sendToServer(tos);
+         content.append("\r\n");
 
          // cc
-         String ccs = "Cc: " + message.getCc().get(0);
+         content.append("Cc: ").append(message.getCc().get(0));
          for(int i = 1; i < message.getCc().size(); ++i)
          {
-            ccs += ", " + message.getCc().get(i);
+            content.append(", ").append(message.getCc().get(i));
          }
-         sendToServer(ccs);
+         content.append("\r\n");
 
-         // subject
-         sendToServer("Subject: " + message.getSubject());
+         // sujet
+         content.append("Subject: =?UTF-8?B?").append(Base64.getEncoder().encodeToString(message.getSubject().getBytes())).append("?=\r\n");
 
-         // body
-         sendToServer("");
-         sendToServer(message.getContent());
-         sendToServer("");
-         sendToServer(".");
-         sendToServer("");
+         // corps du message
+         content.append("\r\n");
+         content.append(message.getContent());
+         content.append("\r\n");
+         content.append(".\r\n");
+
+         out.println(content.toString());
 
          skipMessageServer("250");
 
-         LOG.log(Level.INFO, "Message sent");
+         // Réinitialisation de la transaction pour un autre email
+         out.println("RSET");
+         skipMessageServer("250");
 
-         disconnect();
+         LOG.log(Level.INFO, "Message sent");
       }
 
-      LOG.log(Level.INFO, "All messages send");
+      LOG.log(Level.INFO, "All messages sent");
+      disconnect();
    }
 
    /**
-    * Connecte le client au serveur mail.
+    * Connect le client au serveur spécifié.
     */
-   private void connect(){
+   private void connect()
+   {
       try
       {
-         // Préparation des cannaux.
+         // Préparation des flux.
          socket = new Socket(address, port);
-         out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
-         in = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+         out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), PrankMailRobot.encoding), true);
+         in = new BufferedReader(new InputStreamReader(socket.getInputStream(), PrankMailRobot.encoding));
 
          LOG.log(Level.INFO, "Smtp client connected to server...");
       }
       catch(IOException e)
       {
          LOG.log(Level.SEVERE, "Unable to connect to server: {0}", e.getMessage());
-         cleanup();
-         return;
+         disconnect();
       }
    }
 
    /**
-    * Déconnecte la connexion entre le client et le serveur mail.
+    * Ferme la connexion entre le client et le serveur mail.
     */
    private void disconnect()
    {
-      sendToServer("QUIT");
-      skipMessageServer("221");
-      cleanup();
-   }
-
-   /**
-    * Ferme les différents socket et stream.
-    */
-   private void cleanup()
-   {
+      // Flux d'entrée
       try
       {
          if (in != null)
@@ -190,11 +189,13 @@ public class SmtpClient implements ISmtpClient
          LOG.log(Level.SEVERE, e.getMessage(), e);
       }
 
+      // Flux de sortie
       if (out != null)
       {
          out.close();
       }
 
+      // Socket
       try
       {
          if (socket != null)
@@ -209,19 +210,11 @@ public class SmtpClient implements ISmtpClient
    }
 
    /**
-    * Envoie une ligne au server
-    * @param line Ligne à envoyer
-    */
-   private void sendToServer(String line){
-      out.println(line);
-      out.flush();
-   }
-
-   /**
     * Lis un message du serveur sans le considérer.
     * Lis jusqu'a atteindre le pattern "expectedCode "
-    * Si un autre code et reçu, fin du programme.
+    * Si un autre code et reçu, lève une exception.
     * @param expectedCode Code que l'on souhaite recevoir.
+    * @throws RuntimeException Si le code de retour ne correspond pas à expectedCode.
     */
    private void skipMessageServer(String expectedCode)
    {
@@ -230,23 +223,16 @@ public class SmtpClient implements ISmtpClient
          String line = in.readLine();
          LOG.log(Level.INFO, "Message read: " + line);
 
+         // Si le message reçu ne commence pas par le code attendu.
          if(line != null && !line.startsWith(expectedCode))
          {
             LOG.log(Level.SEVERE, "An error occured, shutting down...");
             disconnect();
-            System.exit(-1);
+            throw new RuntimeException("Error while talking with the server");
          }
 
-         while(line != null && !line.startsWith(expectedCode + " ")); // Lis toutes les lignes jusqu'a obtenir le bon code
+         while(line != null && !line.startsWith(expectedCode + " ")) // Lis toutes les lignes jusqu'a obtenir le code final.
          {
-            // Si la ligne commence par un code autre que celui attendu -> erreur
-            if(!line.startsWith(expectedCode))
-            {
-               LOG.log(Level.SEVERE, "An error occured, shutting down...");
-               disconnect();
-               System.exit(-1);
-            }
-
             LOG.log(Level.INFO, "Message skipped");
 
             line = in.readLine();

@@ -1,12 +1,3 @@
-/*
- -----------------------------------------------------------------------------------
- Cours       : RES
- Fichier     : prankmailrobot.model.prank.Prank.java
- Auteur(s)   : Forestier Quentin & Herzig Melvyn
- Date        : 16.04.2021
- -----------------------------------------------------------------------------------
- */
-
 package prankmailrobot.model.prank;
 
 import prankmailrobot.model.mail.Message;

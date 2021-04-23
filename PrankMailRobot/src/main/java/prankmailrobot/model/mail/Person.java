@@ -1,12 +1,3 @@
-/*
- -----------------------------------------------------------------------------------
- Cours       : RES
- Fichier     : prankmailrobot.model.mail.Person.java
- Auteur(s)   : Forestier Quentin & Herzig Melvyn
- Date        : 16.04.2021
- -----------------------------------------------------------------------------------
- */
-
 package prankmailrobot.model.mail;
 
 /**
@@ -16,7 +7,7 @@ package prankmailrobot.model.mail;
  */
 public class Person
 {
-   private String addressMail;
+   private final String addressMail;
 
    /**
     * Constructeur.

@@ -1,12 +1,3 @@
-/*
- -----------------------------------------------------------------------------------
- Cours       : RES
- Fichier     : prankmailrobot.model.mail.Message.java
- Auteur(s)   : Forestier Quentin & Herzig Melvyn
- Date        : 16.04.2021
- -----------------------------------------------------------------------------------
- */
-
 package prankmailrobot.model.mail;
 
 import java.util.ArrayList;
@@ -21,27 +12,27 @@ public class Message
    /**
     * Expéditeur
     */
-   private String from;
+   private final String from;
 
    /**
     * Liste des récepteurs.
     */
-   private ArrayList<String> to;
+   private final ArrayList<String> to;
 
    /**
     * Liste des personnes jointes.
     */
-   private ArrayList<String> cc;
+   private final ArrayList<String> cc;
 
    /**
     * Sujet du mail
     */
-   private String subject;
+   private final String subject;
 
    /**
     * Contenu du mail
     */
-   private String content;
+   private final String content;
 
    /**
     * Constructeur.
