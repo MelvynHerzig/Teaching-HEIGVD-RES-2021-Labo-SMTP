@@ -68,6 +68,13 @@ public class Group
       return receivers;
    }
 
+   /**
+    * Crée les groupes en fonctions des personnes à piéger et du nombre de groupes
+    * @param persons Liste des victimes.
+    * @param nbGroup Nombre de groupes
+    * @return Retourne la liste des groupes formés.
+    * @throws RuntimeException si il n'est pas possible de former des groupes d'au moins 3 personnes.s
+    */
    public static ArrayList<Group> makeGroups(List<Person> persons, int nbGroup)
    {
       // Vérification de la taille minimale des groupes.

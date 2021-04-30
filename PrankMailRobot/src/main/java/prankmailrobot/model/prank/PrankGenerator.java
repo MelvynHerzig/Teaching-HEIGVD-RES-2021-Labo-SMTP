@@ -40,6 +40,7 @@ public class PrankGenerator
 
    /**
     * Lance la génération des pranks.
+    * @throws RuntimeException Si aucun message n'est configurés.
     */
    public void makePrank()
    {
@@ -48,6 +49,11 @@ public class PrankGenerator
 
       // Liste des contenus du fichier de configuration
       ArrayList<String> contents = configurationManager.getContents();
+
+      if(contents.isEmpty())
+      {
+         throw new RuntimeException("Pas de message trouvé.");
+      }
 
       // Liste des groupes
       ArrayList<Group> groups = Group.makeGroups(configurationManager.getVictims(),
