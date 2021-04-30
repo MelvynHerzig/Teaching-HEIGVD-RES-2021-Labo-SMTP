@@ -1,7 +1,5 @@
 package prankmailrobot.model.mail;
 
-import prankmailrobot.model.prank.Prank;
-
 import java.util.ArrayList;
 import java.util.List;
 
