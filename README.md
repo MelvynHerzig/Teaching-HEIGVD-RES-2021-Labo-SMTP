@@ -20,7 +20,7 @@ depuis ce dossier (une fois dézzipé).
 
 ## Serveur SMTP mock
 ### Qu'est-ce que c'est que cette chose? 
-Un mock est un composant logiciel qui simule un objet réel. Il permet de mettre rapidement en place
+Un mock est un composant logiciel qui simule un composant "réel". Il permet de mettre rapidement en place
 une infrastructure de test afin de s'astreindre des contraintes liées aux composants réels.
 
 ### MockMock
