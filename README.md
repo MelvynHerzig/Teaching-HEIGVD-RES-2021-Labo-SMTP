@@ -57,15 +57,19 @@ généraux du robot.
 
 |Propriété               |Exemples                          |Explication                         
 |----------------|-------------------------------|-----------------------------|
-|*smtpServerAddress*| localhost ou 127.0.0.1 |  Adresse IP du serveur SMTP  |
-|*smtpServerPort*| 25 ou 2525            |Port smtp du serveur ci-dessus |
-|*numberOfGroups*|\<un entier\>|Nombre de groupes à créer avec les adresses fournies. Il doit y avoir au moins 3 adresses par groupe. |
+|*smtpServerAddress**| localhost ou 127.0.0.1 |  Adresse IP du serveur SMTP  |
+|*smtpServerPort**| 25 ou 2525            |Port smtp du serveur ci-dessus |
+|*numberOfGroups**|\<un entier\>|Nombre de groupes à créer avec les adresses fournies. Il doit y avoir au moins 3 adresses par groupe. |
 | *witnessesToCC* | `unemail@gg.np` | Liste d'email à mettre en copie (CC) de tous les envois. Si plusieurs adresses, il faut les séparer avec ", "|
 
->Si le nombre d'adresses fournit dans vicitms.utf8 ne permet pas d'attribuer 3 personnes par groupes, l'application ne fera rien.
+>les éléments marqués d'un '*' sont obligatoires sinon l'espace après les '=' peut être vide.
+
+>Si le nombre d'adresses fourni dans vicitms.utf8 ne permet pas d'attribuer 3 personnes par groupes, l'application ne fera rien.
+>Si le nombre de groupe <= 0, aucun email est envoyé.
 
 ### Configuration des victimes
 Dans le fichier <u>PrankMailRobotPackage/config/victims.utf8</u> nous entrons l'adresse mail des victimes de la blague.
+Si le fichier de contient pas au moins numberOfGroups * 3 adresses, rien n'est envoyé.
 
 ![configVictims](figures/configVictims.png)
 
@@ -75,6 +79,7 @@ Dans le fichier <u>PrankMailRobotPackage/config/victims.utf8</u> nous entrons l'
 
 ### Configuration des messages
 Dans le fichier <u>PrankMailRobotPackage/config/messages.utf8</u> nous entrons les blagues.
+Si aucune blague n'est présente, aucun mail n'est envoyé.
 
 ![configMessages](figures/configMessages.png)
 
