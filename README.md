@@ -16,7 +16,7 @@ Il est possible de configurer :
 L'application est packagée dans le dossier <u>PrankMailRobotPackage.zip</u>. Toutes les manipulations sont à effectuer
 depuis ce dossier (une fois dézzipé).
 
-[![archive](figures/archive.png)]
+![archive](figures/archive.png)
 
 ## Serveur SMTP mock
 ### Qu'est-ce que c'est que cette chose? 
@@ -46,14 +46,14 @@ Il est accessible via deux ports:
 
 Pour accéder à la boîte mail, depuis un navigateur web, utiliser "localhost:8282"
 
-[![interfaceWeb](figures/MockMockInterface.png)]
+![interfaceWeb](figures/MockMockInterface.png)
 
 ## Configuration de PrankMailRobot
 ### Configuration du générale
 Dans le fichier <u>PrankMailRobotPackage/config/config.properties</u>, nous configurons les aspects 
 généraux du robot.
 
-[![configProperties](figures/configProperties.png)]
+![configProperties](figures/configProperties.png)
 
 |Propriété               |Exemples                          |Explication                         
 |----------------|-------------------------------|-----------------------------|
@@ -67,7 +67,7 @@ généraux du robot.
 ### Configuration des victimes
 Dans le fichier <u>PrankMailRobotPackage/config/victims.utf8</u> nous entrons l'adresse mail des victimes de la blague.
 
-[![configVictims](figures/configVictims.png)]
+![configVictims](figures/configVictims.png)
 
 >Renseigner une adresse par ligne, sinon les adresses ne seront pas séparées et seront invalides. La prank enverra 
 >les blagues à une adresse formés de deux emails, ce qui ne fonctionnera pas.
@@ -76,7 +76,7 @@ Dans le fichier <u>PrankMailRobotPackage/config/victims.utf8</u> nous entrons l'
 ### Configuration des messages
 Dans le fichier <u>PrankMailRobotPackage/config/messages.utf8</u> nous entrons les blagues.
 
-[![configMessages](figures/configMessages.png)]
+![configMessages](figures/configMessages.png)
 
 La structure est importante
 
@@ -108,7 +108,7 @@ $ java -jar PrankMailRobot-1.0-SNAPSHOT-launcher.jar
 
 Voici le diagramme de classes de l'application:
 
-[![classes](figures/umlClasses.png)]
+![classes](figures/umlClasses.png)
 
 > <b> prankMailRobot </b> est le point d'entrée du programme. Il crée le <b>configurationManager</b> chargé de la récupération des fichiers de config et le <b>SmtpClient</b> chargé de l'envoi smtp. Ils sont  transmis au prankGenerator.
 
@@ -121,7 +121,7 @@ Ensuite pour chaque <b>group</b>, il va générer une <b>Prank</b> en choisissan
 
 Voici le résumé des communications entre le client smtp et le serveur smtp.
 
-[![communication](figures/umlSequence.png)]
+![communication](figures/umlSequence.png)
 
 > Si le serveur ne répond pas avec les codes présents sur le diagramme, le client considère qu'une erreur s'est produite. En conséquence, il termine la connexion.
 
