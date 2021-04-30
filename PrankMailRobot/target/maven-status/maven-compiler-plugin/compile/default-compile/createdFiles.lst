@@ -1,0 +1,10 @@
+prankmailrobot\PrankMailRobot.class
+prankmailrobot\config\ConfigurationManager.class
+prankmailrobot\model\prank\Prank.class
+prankmailrobot\model\prank\PrankGenerator.class
+prankmailrobot\model\mail\Message.class
+prankmailrobot\config\IConfigurationManager.class
+prankmailrobot\model\mail\Person.class
+prankmailrobot\smtp\SmtpClient.class
+prankmailrobot\model\mail\Group.class
+prankmailrobot\smtp\ISmtpClient.class

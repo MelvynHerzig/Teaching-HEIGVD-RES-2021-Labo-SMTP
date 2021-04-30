@@ -38,49 +38,12 @@ public class Prank
     */
    private String message;
 
-   public Prank(Person sender, ArrayList<Person> recievers, ArrayList<Person> witnesses, String title, String message)
-   {
+   public Prank(Person sender, ArrayList<Person> recievers, ArrayList<Person> witnesses, String title, String message) {
       this.victimSender = sender;
       this.victimRecievers = recievers;
       this.witnesses = witnesses;
       this.title = title;
       this.message = message;
-   }
-
-   /**
-    * Getter de la victime émetterice.
-    * @return Retourne la victime émettrice.
-    */
-   public Person getVictimSender()
-   {
-      return victimSender;
-   }
-
-   /**
-    * Getter des victimes réceptrices.
-    * @return Retourne les victimes réceptrices.
-    */
-   public ArrayList<Person> getVictimRecievers()
-   {
-      return victimRecievers;
-   }
-
-   /**
-    * Getter des personnes jointes.
-    * @return Retourne les personnes jointes.
-    */
-   public ArrayList<Person> getWitnesses()
-   {
-      return witnesses;
-   }
-
-   /**
-    * Getter du message du mail.
-    * @return Retourne le message du mail.
-    */
-   public String getMessage()
-   {
-      return message;
    }
 
    /**

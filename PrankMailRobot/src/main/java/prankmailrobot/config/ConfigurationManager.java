@@ -63,7 +63,7 @@ public class ConfigurationManager implements IConfigurationManager
    private void loadProperties()
    {
       // Ouverture d'un reader sur le fichier.
-      try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("PrankMailRobot/config/config.properties"), PrankMailRobot.encoding)))
+      try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("config/config.properties"), PrankMailRobot.encoding)))
       {
          Properties properties = new Properties();
          properties.load(reader);
@@ -95,7 +95,7 @@ public class ConfigurationManager implements IConfigurationManager
    private void loadAddressesFromFile()
    {
       // Ouverture d'un reader sur le fichier victims
-      try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("PrankMailRobot/config/victims.utf8"), PrankMailRobot.encoding)))
+      try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("config/victims.utf8"), PrankMailRobot.encoding)))
       {
          // Lecture d'une adresse.
          String address = reader.readLine();
@@ -119,13 +119,13 @@ public class ConfigurationManager implements IConfigurationManager
    private void loadMessagesFromFile()
    {
       // Ouverture d'un reader sur le fichier messages
-      try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("PrankMailRobot/config/messages.utf8"), PrankMailRobot.encoding)))
+      try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("config/messages.utf8"), PrankMailRobot.encoding)))
       {
          String line = reader.readLine();
          while(line != null) // Tant que le fichier n'est pas vide
          {
             StringBuilder sb = new StringBuilder(); // Lecture du message.
-            while((line != null) && (!line.equals("=="))) // Tant que pas un nouveau contenu ou fin de fichier.
+            while((line != null) && (!line.startsWith("=="))) // Tant que pas un nouveau contenu ou fin de fichier.
             {
                sb.append(line).append("\r\n");
                line = reader.readLine();

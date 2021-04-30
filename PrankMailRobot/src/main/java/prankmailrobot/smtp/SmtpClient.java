@@ -127,7 +127,7 @@ public class SmtpClient implements ISmtpClient
          content.append("\r\n");
 
          // sujet
-         content.append("Subject: =?UTF-8?B?").append(Base64.getEncoder().encodeToString(message.getSubject().getBytes())).append("?=\r\n");
+         content.append("Subject: =?UTF-8?B?").append(Base64.getEncoder().encodeToString(message.getSubject().getBytes(PrankMailRobot.encoding))).append("?=\r\n");
 
          // corps du message
          content.append("\r\n");
