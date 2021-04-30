@@ -115,7 +115,7 @@ Voici le diagramme de classes de l'application:
 > <b> prankGenerator </b> Il commence par récupérer les informations des fichiers de configurations grâce à <b>configurationManager</b>. Chaque adresse email lue est associée à une <b>Person</b> (doublons possibles). Il va demander à makeGroups de <b>Group</b> de réaliser les répartition des personnes dans les groupes. Si il n'y a pas assez de personnes, l'application s'arrête.
 Ensuite pour chaque <b>group</b>, il va générer une <b>Prank</b> en choisissant, au hasard, un contenu issu du <b>ConfigurationManager</b>. Les <b>pranks</b> ne sont pas "envoyables" pour smtp, elles sont convertie en <b>Message</b> par leur méthode generateMailMessage().
 
->Le <b>prankGenerator </b> transmets les <b>Messages</b> au<b> smtpClient </b> qui va se charger de les envoyer.
+>Le <b>prankGenerator </b> transmet les <b>Messages</b> au<b> smtpClient </b> qui va se charger de les envoyer.
 
 ### Communication avec de serveur smtp
 
