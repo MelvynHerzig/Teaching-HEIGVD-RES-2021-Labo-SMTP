@@ -4,7 +4,7 @@ import prankmailrobot.PrankMailRobot;
 import prankmailrobot.model.mail.Message;
 
 import java.io.PrintWriter;
-import java.io. BufferedReader;
+import java.io.BufferedReader;
 import java.net.Socket;
 import java.io.IOException;
 import java.io.InputStreamReader;
