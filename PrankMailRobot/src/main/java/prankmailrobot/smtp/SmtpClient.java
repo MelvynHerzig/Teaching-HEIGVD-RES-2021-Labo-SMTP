@@ -83,6 +83,18 @@ public class SmtpClient implements ISmtpClient
          out.println("EHLO localhost");
          skipMessageServer("250");
 
+
+         // AUTH mailtrap.io
+         /*out.println("AUTH LOGIN");
+         skipMessageServer("334");
+
+         out.println("M2NmNzUyMTA1OWRmZGE=");
+         skipMessageServer("334");
+
+         out.println("NjM1YzJhM2Y4Mjg3YzE=");
+         skipMessageServer("235");*/
+
+
          // FROM
          out.println("MAIL FROM: <" + message.getFrom() + ">");
          skipMessageServer("250");
@@ -147,6 +159,7 @@ public class SmtpClient implements ISmtpClient
       }
 
       LOG.log(Level.INFO, "All messages sent");
+      out.println("QUIT");
       disconnect();
    }
 
